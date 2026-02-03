@@ -83,18 +83,26 @@ h1 {
 /* Game Area */
 .flag-container {
     margin: 2rem 0;
-    min-height: 240px;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    aspect-ratio: 3/2;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
 }
 
 .flag-container img {
-    max-width: 100%;
-    max-height: 240px;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
     transition: transform 0.3s ease, opacity 0.3s ease;
     opacity: 0; /* Loaded via JS */
 }
