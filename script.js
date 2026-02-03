@@ -182,15 +182,28 @@ function generateQuestion() {
     updateScoreUI();
 
     // Distractors (Cities from the same country)
-    // Filter out the Capital to ensure it's not in the shuffle pool initially
-    const otherCities = correctCountry.cities.filter(city => city !== correctCountry.capital);
-    const shuffledCities = otherCities.sort(() => 0.5 - Math.random());
+    const capital = correctCountry.capital;
+    const popularCity = correctCountry.cities[0];
 
-    // Select up to 5 distractors
-    const distractors = shuffledCities.slice(0, 5);
+    // Filter out the Capital to get potential distractors
+    const otherCities = correctCountry.cities.filter(city => city !== capital);
+
+    let distractors = [];
+
+    // 1. Mandatory Popular City: If the most popular city is not the capital, it MUST be included
+    if (popularCity !== capital) {
+        distractors.push(popularCity);
+    }
+
+    // 2. Add random cities from the same country as distractors until we have 5 total (or no more left)
+    const remainingPool = otherCities.filter(city => !distractors.includes(city));
+    const shuffledPool = remainingPool.sort(() => 0.5 - Math.random());
+
+    const additionalDistractors = shuffledPool.slice(0, 5 - distractors.length);
+    distractors = [...distractors, ...additionalDistractors];
 
     // Create options array: Correct Capital + Distractors
-    let options = [correctCountry.capital, ...distractors];
+    let options = [capital, ...distractors];
 
     // Shuffle options
     options = options.sort(() => 0.5 - Math.random());
